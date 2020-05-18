@@ -2,7 +2,7 @@
 
 	$file = $_GET["file"];
 
-	$data = file_get_contents('files\\booties_data.json');
+	$data = file_get_contents('files/booties_data.json');
 
 	$json_arr = json_decode($data, true);
 
@@ -13,7 +13,7 @@
 		if ($value['save'] == $file)
 		{
 			$arr_index[] = $key;
-			unlink("files\\booties\\".$file.".txt");
+			unlink("files/booties/".$file.".txt");
 		}
 	}
 
@@ -24,7 +24,7 @@
 
 	$json_arr = array_values($json_arr);
 
-	file_put_contents('files\\booties_data.json', json_encode($json_arr));
+	file_put_contents('files/booties_data.json', json_encode($json_arr));
 
 	header("Location: files.php");
 

@@ -4,16 +4,21 @@
 	{
 		if(isset($_POST["data"]))
 		{
+		    if (!file_exists('files/booties/')) 
+		    {
+                mkdir('files/booties/', 0777, true);
+            }
+
 			$timenow = time();
 			$decoded = base64_decode($_POST["data"]);
 		
 			$filename = $_POST["user"].".".$timenow.".".md5(base64_encode($decoded));
 		
-			$fp = fopen("files\\booties\\".$filename.".txt", 'w');
+			$fp = fopen("files/booties/".$filename.".txt", 'w');
 			fwrite($fp, $decoded);
 			fclose($fp);
     
-			$saveinfo = json_decode(file_get_contents("files\\booties_data.json"));
+			$saveinfo = json_decode(file_get_contents("files/booties_data.json"));
 			$myObj = new stdClass();
 		
 			$myObj->username = $_POST["user"];
@@ -24,7 +29,7 @@
     
 			$saveinfo[] = $myObj;
 		
-			file_put_contents("files\\booties_data.json", json_encode($saveinfo));
+			file_put_contents("files/booties_data.json", json_encode($saveinfo));
 		}
 	}
 	else

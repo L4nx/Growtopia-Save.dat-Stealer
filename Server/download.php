@@ -1,10 +1,10 @@
 <?php
 
-	require("files\\verified.php");
+	require("files/verified.php");
 	
-	$array = explode("<=break=>", file_get_contents("files\\booties\\".$_GET["file"].".txt"));
+	$array = explode("<=break=>", file_get_contents("files/booties/".$_GET["file"].".txt"));
 	
-	file_put_contents("save.dat", $array[0]);	
+	file_put_contents("save.dat", base64_decode($array[0]));	
 
 	header('Content-Type: application/download');
     header('Content-Disposition: attachment; filename="save.dat"');
@@ -15,7 +15,5 @@
     fclose($fp);
 
 	unlink ("save.dat");
-	
-	//header("Location: files.php");
 	
 ?>

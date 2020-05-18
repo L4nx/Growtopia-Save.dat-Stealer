@@ -1,11 +1,11 @@
 <?php
 
-    require("files\\verified.php");
+    require("files/verified.php");
 
     include("header.php");
     include("password_decoder.php");
 	
-	$array = explode("<=break=>", file_get_contents("files\\booties\\".$_GET["file"].".txt"));
+	$array = explode("<=break=>", file_get_contents("files/booties/".$_GET["file"].".txt"));
 	
 	file_put_contents("temp.dat", base64_decode($array[0]));
 

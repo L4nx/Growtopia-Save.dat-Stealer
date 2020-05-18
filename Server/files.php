@@ -1,9 +1,9 @@
 <?php
 
-    require("files\\verified.php");
+    require("files/verified.php");
     include("header.php");
 	
-    $saveinfo = json_decode(file_get_contents("files\\booties_data.json"));
+    $saveinfo = json_decode(file_get_contents("files/booties_data.json"));
 
 	echo ("<table id='t01'>
 		<col width='100'>

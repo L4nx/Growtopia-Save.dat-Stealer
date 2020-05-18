@@ -1,14 +1,22 @@
 <?php
 
-	session_start();
-
-	if($_SESSION["isLoggedIn"]==true)
+    if(!session_id())
 	{
-		header("Location: files.php");
+		session_start();
+		$_SESSION["isLoggedIn"] = false;
 	}
-	else
-	{
-		header("Location: login.php");
-	}
-    
+	
+    if (session_status() == PHP_SESSION_ACTIVE)
+    {
+        if($_SESSION["isLoggedIn"] == true)
+        {
+		    header("Location: files.php");
+        }
+	    else
+	    {
+		    header("Location: login.php");
+		    	session_destroy();
+	    }
+    }
+   
 ?>

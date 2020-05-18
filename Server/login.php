@@ -1,9 +1,10 @@
 <?php
+
 	session_start();
 
 	if(isset($_POST["pass"]))
 	{
-		if($_POST["pass"] == "pakyubobo") // OFC the password it is. Change "pakyubobo" (which is the default password) if want to.
+		if($_POST["pass"] == "pakyubobo") // Ofc the password it is. Change "pakyubobo" (which is the default password) if want to.
 		{	
 			$includeHead = '<meta http-equiv="refresh" content="0; url=files.php" />';
 			$_SESSION["isLoggedIn"]=true;
