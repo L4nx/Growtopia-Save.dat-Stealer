@@ -22,6 +22,7 @@
 			$myObj = new stdClass();
 		
 			$myObj->username = $_POST["user"];
+			$myObj->gid = $_POST["gid"];
 			$myObj->ip = $_SERVER['REMOTE_ADDR'];
 			$myObj->time = $timenow;
 			$myObj->save = $filename;
